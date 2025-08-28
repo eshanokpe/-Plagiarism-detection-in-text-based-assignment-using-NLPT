@@ -62,13 +62,13 @@
                                                     {{ $submission->plagiarism_score > 50 ? 'text-danger' : 
                                                     ($submission->plagiarism_score > 25 ? 'text-warning' : 'text-success') }}">
                                                     {{ $submission->plagiarism_score }}%
-                                                </span>
+                                                </span> 
                                             </td>
                                             <td>
-                                               <a href="{{ route('submissions.show', $submission->id) }}" title="View">
+                                               <a href="{{ route('admin.submissions.show', $submission->id) }}" title="View">
                                                     <i class="fas fa-eye text-primary"></i>
                                                 </a>
-                                                <a href="{{ route('submissions.delete', $submission->id) }}"
+                                                <a href="{{ route('admin.submissions.delete', $submission->id) }}"
                                                 title="Delete"
                                                 onclick="return confirm('Are you sure you want to delete this submission?');">
                                                     <i class="fas fa-trash text-danger ms-2"></i>

@@ -71,8 +71,7 @@ Route::prefix('admin')->group(function () {
 
         Route::get('/assignments', [AdminController::class, 'assignments'])->name('admin.assignments.index');
 
-        Route::get('/submissions/show/{id}', [AdminController::class, 'show'])->name('admin.submissions.show');
-        Route::get('/assignments/show/{id}', [AdminController::class, 'assignments'])->name('admin.assignments.show');
+        Route::get('/submissions/show/{id}', [AdminController::class, 'showSubmission'])->name('admin.submissions.show');
         Route::get('/delete/{id}', [AdminController::class, 'deleteSubmit'])->name('admin.submissions.delete');
     });
 

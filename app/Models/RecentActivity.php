@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class RecentActivity extends Model
-{
+{ 
     protected $fillable = [
         'user_type',
         'user_id',

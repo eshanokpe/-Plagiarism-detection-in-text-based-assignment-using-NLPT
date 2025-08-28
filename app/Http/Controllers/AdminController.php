@@ -6,6 +6,7 @@ use App\Models\Submission;
 use App\Models\Assignment;
 use App\Models\Lecturer;
 use App\Models\User;
+use App\Models\RecentActivity;
 use Illuminate\Http\Request;
 
 
@@ -83,10 +84,38 @@ class AdminController extends Controller
             'email'    => $validated['email'],
             'password' => Hash::make($validated['password']),
         ]);
+        RecentActivity::create([
+            'user_type'   => 'lecturer',
+            'user_id'     => $lecturer->id,
+            'action'      => 'created',
+            'description' => 'Lecturer ' . $lecturer->name . ' was created by admin ID ' . (Auth::user() ? Auth::user()->id : 'system'),
+        ]);
 
         // Redirect back with success
         return redirect()
             ->route('admin.lectures.index')
             ->with('success', 'Lecturer created successfully!');
+    }
+
+    public function assignments(){
+
+        return view('admin.submissions.index');
+    }
+
+   
+    public function showSubmission($id)
+    {
+        $submission = Submission::with(['user', 'assignment'])
+            ->findOrFail($id);
+
+        return view('admin.submissions.show', compact('submission'));
+    }
+
+    public function deleteSubmit($id)
+    {
+        $assignment = Submission::findOrFail($id);
+        $assignment->delete();
+
+        return redirect()->route('admin.dashboard')->with('success', 'Assignment deleted successfully.');
     }
 }

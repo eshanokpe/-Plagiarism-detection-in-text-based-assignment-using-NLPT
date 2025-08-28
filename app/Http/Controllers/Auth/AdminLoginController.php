@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\RecentActivity;
 use Illuminate\Support\Facades\Auth;
 
 class AdminLoginController extends Controller
@@ -48,6 +49,13 @@ class AdminLoginController extends Controller
         // Attempt login
         if (Auth::guard('admin')->attempt($credentials)) {
             \Log::debug('Login successful');
+            // Log recent activity
+            RecentActivity::create([
+                'user_type'   => 'admin',
+                'user_id'     => $admin->id,
+                'action'      => 'login',
+                'description' => 'Admin ' . $admin->name . ' logged in.',
+            ]);
             // dd('successful');
             return redirect()->route('admin.dashboard.index');
         }
