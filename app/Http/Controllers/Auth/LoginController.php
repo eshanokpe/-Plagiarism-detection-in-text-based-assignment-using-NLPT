@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use App\Models\RecentActivity;
 
 class LoginController extends Controller
 {
@@ -65,5 +65,26 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
+    } 
+
+    public function logout(Request $request)
+    {
+        $student = Auth::user();
+
+        // Log recent activity
+        if ($student) {
+            RecentActivity::create([
+                'user_type'   => 'user',
+                'user_id'     => $student->id,
+                'action'      => 'logout',
+                'description' => 'Student ' . $student->name . ' logged out.',
+            ]);
+        }
+
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login')->with('success', 'Logged out successfully.');
     }
 }

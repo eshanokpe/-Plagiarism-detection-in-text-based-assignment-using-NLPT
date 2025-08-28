@@ -26,13 +26,13 @@
                     <i class="fas fa-user-cog"></i>
                     <span class="menu-text">Profile</span>
                 </a>
-            </li>
+            </li> 
             <li>
-                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <a href="{{ route('student.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <i class="fas fa-sign-out-alt"></i>
                     <span class="menu-text">Logout</span>
                 </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                <form id="logout-form" action="{{ route('student.logout') }}" method="POST" class="d-none">
                     @csrf
                 </form>
             </li>

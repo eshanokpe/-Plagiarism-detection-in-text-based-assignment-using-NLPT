@@ -324,13 +324,13 @@
                                     <a class="dropdown-item" href="{{ route('profile') }}">
                                         <i class="fas fa-user-cog me-1"></i> Profile
                                     </a>
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                    <a class="dropdown-item" href="{{ route('student.logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         <i class="fas fa-sign-out-alt me-1"></i> {{ __('Logout') }}
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    <form id="logout-form" action="{{ route('student.logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
                                 </div>

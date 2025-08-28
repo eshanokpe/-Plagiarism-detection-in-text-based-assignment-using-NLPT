@@ -34,6 +34,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/text-check', [AssignmentController::class, 'checkText'])->name('text.check');
     Route::post('/submission-store', [SubmissionController::class, 'store'])->name('submission.store');
     Route::get('/profile', [HomeController::class, 'profile'])->name('profile');
+    Route::post('student/logout', [LoginController::class, 'logout'])->name('student.logout');
 });
 
 // Lecturer authentication routes
