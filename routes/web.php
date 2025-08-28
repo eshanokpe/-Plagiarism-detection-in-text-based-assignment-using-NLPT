@@ -65,6 +65,12 @@ Route::prefix('admin')->group(function () {
     // Authenticated admin 
     Route::middleware(['admin.auth'])->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard.index');
+        Route::get('/users', [AdminController::class, 'users'])->name('admin.users.index');
+        Route::get('/lectures', [AdminController::class, 'lectures'])->name('admin.lectures.index');
+        Route::post('/store', [AdminController::class, 'lecturesStore'])->name('admin.lecturer.store');
+
+        Route::get('/assignments', [AdminController::class, 'assignments'])->name('admin.assignments.index');
+
         Route::get('/submissions/show/{id}', [AdminController::class, 'show'])->name('admin.submissions.show');
         Route::get('/assignments/show/{id}', [AdminController::class, 'assignments'])->name('admin.assignments.show');
         Route::get('/delete/{id}', [AdminController::class, 'deleteSubmit'])->name('admin.submissions.delete');

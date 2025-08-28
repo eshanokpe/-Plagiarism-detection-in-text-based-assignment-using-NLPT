@@ -32,9 +32,10 @@ class AdminLoginController extends Controller
             \Log::debug('No admin found with this email');
             return back()->withErrors(['error' => 'No admin account found with this email']);
         }
-
+ 
         // Debugging: Display the admin record found
         \Log::debug('Admin record found:', $admin->toArray());
+            // dd('successful');
         
         // Check if password matches
         if (!\Hash::check($credentials['password'], $admin->password)) {
@@ -47,7 +48,8 @@ class AdminLoginController extends Controller
         // Attempt login
         if (Auth::guard('admin')->attempt($credentials)) {
             \Log::debug('Login successful');
-            return redirect()->intended(route('admin.dashboard.index'));
+            // dd('successful');
+            return redirect()->route('admin.dashboard.index');
         }
 
         \Log::debug('Login failed for unknown reason');

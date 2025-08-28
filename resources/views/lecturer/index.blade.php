@@ -1,8 +1,8 @@
- @extends('admin.app')
+ @extends('lecturer.app')
 
 @section('content') 
  <div class="main-content">
-        <div class="topbar"> 
+        <div class="topbar">
             <h1>Dashboard</h1>
             <div class="admin-profile">
                 <div class="admin-avatar">
@@ -27,9 +27,9 @@
                     <div class="small text-muted">Administrator</div>
                 </div>
             </div>
-        </div> 
+        </div>
         
-        @include('admin.navbar')
+        @include('lecturer.navbar')
         
         <div class="row">
             <div class="col-12">
