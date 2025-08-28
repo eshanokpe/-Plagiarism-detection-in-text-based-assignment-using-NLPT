@@ -348,7 +348,7 @@
                     
                     <div class="auth-form-container">
                         <div class="logo">
-                            <p>CSRF Token: {{ csrf_token() }}</p>
+                            {{-- <p>CSRF Token: {{ csrf_token() }}</p> --}}
 
                             <h2>Plagiarism<span>Check</span></h2>
                             <div class="tagline">NLP-Powered Plagiarism Detection</div>

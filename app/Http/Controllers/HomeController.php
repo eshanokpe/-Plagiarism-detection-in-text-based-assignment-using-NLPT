@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
 use App\Models\Assignment;
+use App\Models\Submission;
+
 use Smalot\PdfParser\Parser as PdfParser;
 
 class HomeController extends Controller
@@ -37,7 +39,7 @@ class HomeController extends Controller
         $assignments_count = $assignments->total();
         $counts = $this->getAssignmentCounts($user->id);
        
-        $recent_assignments = Assignment::where('user_id', $user->id)
+        $recent_assignments = Submission::where('user_id', $user->id)
                                         ->orderBy('created_at', 'desc')
                                         ->take(5)
                                         ->get();
@@ -51,13 +53,14 @@ class HomeController extends Controller
     private function getAssignmentCounts($userId)
     {
         $query = Assignment::where('user_id', $userId);
+        $submitted = Submission::count();
 
         // Based on the current implementation, all assignments stored in the database
         // are from successful API checks, so they are all considered 'completed'.
         return [
             'total'     => $query->count(),
             'completed' => $query->count(),
-            'pending'   => 0,
+            'submitted'   => $submitted,
             'failed'    => 0,
         ];
     }

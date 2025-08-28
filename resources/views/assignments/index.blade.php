@@ -62,8 +62,8 @@
                 <div class="col-md-3">
                     <div class="card text-center shadow-sm">
                         <div class="card-body">
-                            <h5 class="card-title">Pending Checks</h5>
-                            <p class="display-6 text-warning">{{ $counts['pending'] ?? 0 }}</p>
+                            <h5 class="card-title">Submitted </h5>
+                            <p class="display-6 text-warning">{{ $counts['submitted'] ?? 0 }}</p>
                         </div>
                     </div>
                 </div>

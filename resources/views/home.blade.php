@@ -67,10 +67,16 @@
                         <div class="stat-label">Total Checks</div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                {{-- <div class="col-md-4">
                     <div class="dashboard-card stat-card">
                         <div class="stat-number">{{ $counts['completed'] ?? 0 }}</div>
                         <div class="stat-label">Completed Checks</div>
+                    </div>
+                </div> --}}
+                <div class="col-md-6">
+                    <div class="dashboard-card stat-card">
+                        <div class="stat-number">{{ $counts['submitted'] ?? 0 }}</div>
+                        <div class="stat-label">Submitted Checks</div>
                     </div>
                 </div>
                 
@@ -97,32 +103,24 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($recent_assignments as $assignment)
+                                        @foreach($recent_assignments as $submission)
                                             <tr>
-                                                <td>{{ Str::limit($assignment->title, 40) }}</td>
+                                                <td>{{ Str::limit($submission->title, 40) }}</td>
                                                 <td>
-                                                    @php
-                                                        $submission = $assignment->submissions->last();
-                                                    @endphp
-
-                                                    @if($submission)
-                                                        <span class="fw-bold {{ $submission->plagiarism_score > 50 ? 'text-danger' : ($submission->plagiarism_score > 25 ? 'text-warning' : 'text-success') }}">
-                                                            {{ $submission->plagiarism_score }}%
-                                                        </span>
-                                                    @else
-                                                        <span class="text-muted">
-                                                            0%
-                                                        </span>
-                                                    @endif
+                                                
+                                                    <span class="fw-bold {{ $submission->plagiarism_score > 50 ? 'text-danger' : ($submission->plagiarism_score > 25 ? 'text-warning' : 'text-success') }}">
+                                                        {{ $submission->plagiarism_score }}%
+                                                    </span>
+                                                    
                                                 </td>
-                                                <td>{{ $assignment->created_at->format('M d, Y') }}</td>
+                                                <td>{{ $submission->created_at->format('M d, Y') }}</td>
                                                 <td>
-                                                    <a href="{{ route('assignments.show', $assignment->id) }}" class="btn btn-sm btn-outline-secondary">
+                                                    <a href="{{ route('assignments.show', $submission->id) }}" class="btn btn-sm btn-outline-secondary">
                                                         <i class="fas fa-eye me-1"></i> View
                                                     </a>
                                                 </td>
                                             </tr>
-                                        @endforeach
+                                        @endforeach 
                                     </tbody>
                                 </table>
                             </div>

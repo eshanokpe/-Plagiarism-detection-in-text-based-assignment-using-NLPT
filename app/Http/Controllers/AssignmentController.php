@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Assignment;
 use Smalot\PdfParser\Parser as PdfParser;
 use Exception;
+use App\Models\Submission;
 
 class AssignmentController extends Controller
 {
@@ -213,13 +214,14 @@ class AssignmentController extends Controller
     private function getAssignmentCounts($userId)
     {
         $query = Assignment::where('user_id', $userId);
+        $submitted = Submission::count();
 
         // Based on the current implementation, all assignments stored in the database
         // are from successful API checks, so they are all considered 'completed'.
         return [
             'total'     => $query->count(),
             'completed' => $query->count(),
-            'pending'   => 0,
+            'submitted'   => $submitted,
             'failed'    => 0,
         ];
     }
