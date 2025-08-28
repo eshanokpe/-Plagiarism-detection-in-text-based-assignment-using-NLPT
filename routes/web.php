@@ -18,7 +18,8 @@ use App\Http\Controllers\LecturerController;
 
 // Default login page (for students)
 Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
-
+Route::post('/login', [LoginController::class, 'login'])->name('login');
+ 
 // Laravel's built-in auth routes for students
 Auth::routes();
 
@@ -54,14 +55,14 @@ Route::prefix('lecturer')->group(function () {
     // Logout route (doesn't require middleware)
     Route::post('/logout', [LecturerLoginController::class, 'logout'])->name('lecturer.logout');
 });
-
+  
 Route::prefix('admin')->group(function () {
     // Guest admin (not logged in)
 
     Route::get('/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
     Route::post('/login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
    
-    // Authenticated admin
+    // Authenticated admin 
     Route::middleware(['admin.auth'])->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard.index');
         Route::get('/submissions/show/{id}', [AdminController::class, 'show'])->name('admin.submissions.show');

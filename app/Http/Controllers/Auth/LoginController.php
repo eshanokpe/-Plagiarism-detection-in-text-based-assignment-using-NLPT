@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+
 
 class LoginController extends Controller
 {
@@ -16,7 +20,7 @@ class LoginController extends Controller
     | redirecting them to your home screen. The controller uses a trait
     | to conveniently provide its functionality to your applications.
     |
-    */
+    */ 
 
     use AuthenticatesUsers;
 
@@ -27,6 +31,31 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/home';
 
+    public function login(Request $request)
+    {
+        // dd('login');
+        // ✅ Validate input
+        $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
+
+        // ✅ Attempt login
+        if (Auth::attempt(
+            ['email' => $request->email, 'password' => $request->password],
+            $request->filled('remember')
+        )) {
+            // Regenerate session to prevent fixation
+            $request->session()->regenerate();
+
+            return redirect()->intended($this->redirectPath());
+        }
+
+        // ❌ If login fails, throw error
+        throw ValidationException::withMessages([
+            'email' => [trans('auth.failed')],
+        ]);
+    }
     /**
      * Create a new controller instance.
      *

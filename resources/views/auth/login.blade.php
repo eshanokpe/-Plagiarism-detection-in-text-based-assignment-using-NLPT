@@ -324,7 +324,7 @@
                     <div class="auth-side-panel">
                         <div class="text-center">
                             <i class="fas fa-shield-alt auth-icon"></i>
-                            <h3>PlagiarismGuard</h3>
+                            <h3>Plagiarism Check</h3>
                             <p>Advanced NLP-powered plagiarism detection for academic integrity</p>
                         </div>
                         
@@ -348,7 +348,9 @@
                     
                     <div class="auth-form-container">
                         <div class="logo">
-                            <h2>Plagiarism<span>Guard</span></h2>
+                            <p>CSRF Token: {{ csrf_token() }}</p>
+
+                            <h2>Plagiarism<span>Check</span></h2>
                             <div class="tagline">NLP-Powered Plagiarism Detection</div>
                         </div>
                         
@@ -365,7 +367,7 @@
                             </div>
                             
                             <form method="POST" action="{{ route('login') }}">
-                                @csrf
+                                @csrf 
                                 
                                 <!-- Email Field -->
                                 <div class="form-floating">
@@ -482,7 +484,7 @@
                             <p id="login-link-text">Don't have an account? <a href="#" id="switch-to-register">Sign up now</a></p>
                             <p id="register-link-text" style="display: none;">Already have an account? <a href="#" id="switch-to-login">Sign in here</a></p>
                         </div>
-                        <br/>
+                        <br/> 
                         <div class="d-flex justify-content-between mb-4">
                             <a href="{{ route('lecturer.login') }}" class="text-decoration-none" id="switch-to-register">Lectures Login</a></p>
                             <a href="{{ route('admin.login') }}" class="text-decoration-none" id="switch-to-register">Admin Login</a></p>
