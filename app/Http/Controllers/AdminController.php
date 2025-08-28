@@ -116,6 +116,6 @@ class AdminController extends Controller
         $assignment = Submission::findOrFail($id);
         $assignment->delete();
 
-        return redirect()->route('admin.dashboard')->with('success', 'Assignment deleted successfully.');
+        return redirect()->route('admin.dashboard.index')->with('success', 'Assignment deleted successfully.');
     }
 }
