@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Submission;
 use App\Models\Assignment;
 use App\Models\User;
+use App\Models\RecentActivity;
 use Illuminate\Http\Request;
 
 
@@ -77,13 +78,20 @@ class LecturerController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'due_date' => 'required|date',
-        ]);
+        ]); 
 
-        Assignment::create([
+        $assignment = Assignment::create([
             'lecturer_id' => Auth::id(),
             'title' => $request->title,
             'description' => $request->description,
             'due_date' => $request->due_date,
+        ]);
+        // Log recent activity
+        RecentActivity::create([
+            'user_type'   => 'lecturer',
+            'user_id'     => Auth::id(),
+            'action'      => 'created_assignment',
+            'description' => 'Assignment "' . $assignment->title . '" was created by lecturer ID ' . Auth::id(),
         ]);
 
         return redirect()->route('lecturer.dashboard')->with('success', 'Assignment created successfully.');

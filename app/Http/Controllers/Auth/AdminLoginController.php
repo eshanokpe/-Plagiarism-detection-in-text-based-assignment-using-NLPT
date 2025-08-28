@@ -87,4 +87,25 @@ class AdminLoginController extends Controller
         // Your delete submission logic here
         return redirect()->back()->with('success', 'Submission deleted successfully');
     }
+
+    public function logout(Request $request)
+    {
+        $admin = Auth::guard('admin')->user();
+
+        // Log recent activity
+        if ($admin) {
+            RecentActivity::create([
+                'user_type'   => 'admin',
+                'user_id'     => $admin->id,
+                'action'      => 'logout',
+                'description' => 'Admin ' . $admin->name . ' logged out.',
+            ]);
+        }
+
+        Auth::guard('admin')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('admin.login')->with('success', 'Logged out successfully.');
+    }
 }

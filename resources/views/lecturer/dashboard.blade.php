@@ -49,13 +49,13 @@
                                     @endif
                                 </td>
                                 <td class="text-center">
-                                    <a href="{{ route('submissions.delete', $submission->id) }}"
+                                    <a href="{{ route('lecturer.submissions.delete', $submission->id) }}"
                                         class="btn btn-sm btn-outline-primary me-1"
                                         onclick="return confirm('Are you sure you want to delete this submission?');">
                                             <i class="fas fa-eye"></i> Delete
                                         </a>
 
-                                    <a href="{{ route('submissions.show', $submission->id) }}" 
+                                    <a href="{{ route('lecturer.submissions.show', $submission->id) }}" 
                                        class="btn btn-sm btn-outline-secondary">
                                         <i class="fas fa-eye"></i> Submission
                                     </a>

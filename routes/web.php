@@ -39,13 +39,13 @@ Route::middleware(['auth'])->group(function () {
 // Lecturer authentication routes
 Route::prefix('lecturer')->group(function () {
     // Guest lecturer (not logged in)
-    Route::middleware(['lecturer.guest'])->group(function () {
+    // Route::middleware(['lecturer.guest'])->group(function () {
         Route::get('/login', [LecturerLoginController::class, 'showLoginForm'])->name('lecturer.login');
         Route::post('/login', [LecturerLoginController::class, 'login'])->name('lecturer.login.submit');
-    });
+    // });
 
     // Authenticated lecturer
-    Route::middleware(['lecturer'])->group(function () {
+    Route::middleware(['lecturer.auth'])->group(function () {
         Route::get('/dashboard', [LecturerController::class, 'dashboard'])->name('lecturer.dashboard');
         Route::get('/submissions/show/{id}', [LecturerController::class, 'show'])->name('lecturer.submissions.show');
         Route::get('/assignments/show/{id}', [LecturerController::class, 'assignments'])->name('lecturer.assignments.show');
