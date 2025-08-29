@@ -21,6 +21,12 @@
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Login</button>
                     </form>
+                    <div class="alert alert-info text-center" role="alert">
+                        <small>
+                            <a href="{{ route('login') }}" class="text-black text-center" id="switch-to-register">Home Page</a></p>
+
+                        </small>
+                    </div>
                 </div>
             </div>
         </div>

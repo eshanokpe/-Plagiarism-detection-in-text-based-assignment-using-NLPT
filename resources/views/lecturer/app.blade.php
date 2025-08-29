@@ -20,6 +20,9 @@
         body {
             background-color: var(--light-bg);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         
         .sidebar {
@@ -167,12 +170,23 @@
 </head>
 <body> 
     @include('lecturer.sidebar')
-     <main class="py-2">
+     <main class="py-2" style="flex: 1 0 auto;">
         @yield('content')
     </main> 
-    
-   
+    <footer class="main-footer py-3 bg-white border-top" style="margin-left: 250px; padding-left: 20px; padding-right: 20px;">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
+                    <small class="text-muted">Copyright &copy; {{ date('Y') }} <a href="#" class="fw-bold text-decoration-none text-muted">Plagiarism Detector</a>. All rights reserved.</small>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <small class="text-muted">Built with 🍵 by Isola Oluwatobi Kaosara</small>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

@@ -27,8 +27,15 @@
         body {
             font-family: 'Nunito', sans-serif;
             background-color: #f5f7fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         
+        #app {
+            flex: 1 0 auto;
+        }
+
         .navbar-brand {
             font-weight: 700;
             color: var(--primary);
@@ -344,8 +351,19 @@
         <main class="py-4">
             @yield('content')
         </main>
-    </div> 
-     
+    </div>
+    <footer class="main-footer mt-auto py-3 bg-white border-top">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
+                    <small class="text-muted">Copyright &copy; {{ date('Y') }} <a href="#" class="fw-bold text-decoration-none text-muted">Plagiarism Detector</a>. All rights reserved.</small>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <small class="text-muted">Built with 🍵 by Isola Oluwatobi Kaosara</small>
+                </div>
+            </div>
+        </div>
+    </footer>
     <!-- jQuery (required for Toastr) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- Toastr JavaScript -->

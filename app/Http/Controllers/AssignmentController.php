@@ -205,9 +205,11 @@ class AssignmentController extends Controller
      * Display the specified assignment with details and submissions.
      */
     public function show($id)
+    
     {
-        $assignment = Assignment::with(['submissions', 'user'])->findOrFail($id);
-
-        return view('assignments.show', compact('assignment'));
+        $submission = Submission::with(['user', 'assignment'])
+            ->findOrFail($id);
+        
+        return view('assignments.show', compact('submission'));
     }
 }

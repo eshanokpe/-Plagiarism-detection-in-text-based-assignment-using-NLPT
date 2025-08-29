@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="main-wrapper">
+<div class="main-wrapper"> 
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="sidebar-header">
