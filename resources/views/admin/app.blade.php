@@ -180,7 +180,7 @@
                     <small class="text-muted">Copyright &copy; {{ date('Y') }} <a href="#" class="fw-bold text-decoration-none text-muted">Plagiarism Detector</a>. All rights reserved.</small>
                 </div>
                 <div class="col-md-6 text-center text-md-end">
-                    <small class="text-muted">Built with 🍵 by Isola Oluwatobi Kaosara</small>
+                    <small class="text-muted">Develop by Isola Oluwatobi Kaosara</small>
                 </div>
             </div>
         </div>
