@@ -486,7 +486,7 @@
                         </div>
                         <br/> 
                         <div class="d-flex justify-content-between mb-4">
-                            <a href="{{ route('lecturer.login') }}" class="text-decoration-none" id="switch-to-register">Lectures Login</a></p>
+                            <a href="{{ route('lecturer.login') }}" class="text-decoration-none" id="switch-to-register">Lecturer Login</a></p>
                             <a href="{{ route('admin.login') }}" class="text-decoration-none" id="switch-to-register">Admin Login</a></p>
                             
                         </div>

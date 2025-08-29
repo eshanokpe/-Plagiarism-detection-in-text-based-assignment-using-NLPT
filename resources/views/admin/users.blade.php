@@ -41,7 +41,7 @@
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
-                                    <tr>
+                                    <tr> 
                                         <th>#</th>
                                         <th>Name</th>
                                         <th>Email</th>

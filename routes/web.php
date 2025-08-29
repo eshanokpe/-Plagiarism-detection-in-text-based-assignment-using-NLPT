@@ -48,8 +48,10 @@ Route::prefix('lecturer')->group(function () {
     // Authenticated lecturer
     Route::middleware(['lecturer.auth'])->group(function () {
         Route::get('/dashboard', [LecturerController::class, 'dashboard'])->name('lecturer.dashboard');
+        Route::get('/users', [LecturerController::class, 'users'])->name('lecturer.users.index');
+        Route::get('/assignments', [LecturerController::class, 'assignments'])->name('lecturer.assignments.index');
+
         Route::get('/submissions/show/{id}', [LecturerController::class, 'show'])->name('lecturer.submissions.show');
-        Route::get('/assignments/show/{id}', [LecturerController::class, 'assignments'])->name('lecturer.assignments.show');
         Route::get('/delete/{id}', [LecturerController::class, 'deleteSubmit'])->name('lecturer.submissions.delete');
     });
 

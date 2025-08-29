@@ -1,62 +1,87 @@
-@extends('layouts.app')
-
-@section('title', 'Submission Details')
+@extends('lecturer.app')
 
 @section('content')
-<div class="container mt-4">
-    <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white">
-            <h5 class="mb-0">
-                <i class="fas fa-file-alt me-2"></i> Submission Details
-            </h5>
-        </div>
-        <div class="card-body">
-            
-            {{-- Assignment Info --}}
-            <h6 class="text-muted mb-2">Assignment</h6>
-            <p><strong>{{ $submission->title ?? 'Untitled' }}</strong></p>
-            <p class="text-muted">{{ $submission->description }}</p>
-            <hr>
-
-            {{-- Student Info --}}
-            <h6 class="text-muted mb-2">Submitted By</h6>
-            <p>
-                <i class="fas fa-user me-2"></i> 
-                {{ $submission->user->name }} ({{ $submission->user->email }})
-            </p>
-            <hr>
-
-            {{-- Submission Info --}}
-            <h6 class="text-muted mb-2">Submission Details</h6>
-            <p>
-                <i class="fas fa-clock me-2"></i> Submitted on 
-                {{ $submission->created_at->format('d M Y, h:i A') }}
-            </p>
-            @if($submission->file_path)
-                <p>
-                    <i class="fas fa-paperclip me-2"></i>
-                    <a href="{{ asset('storage/' . $submission->file_path) }}" 
-                       target="_blank" 
-                       class="btn btn-sm btn-outline-success">
-                        <i class="fas fa-download me-1"></i> Download File
-                    </a>
-                </p>
-            @endif
-
-            {{-- Feedback / Grade (Optional if implemented later) --}}
-            @if($submission->grade || $submission->feedback)
-                <hr>
-                <h6 class="text-muted mb-2">Lecturer Feedback</h6>
-                <p><strong>Grade:</strong> {{ $submission->grade ?? 'Not Graded Yet' }}</p>
-                <p><strong>Feedback:</strong> {{ $submission->feedback ?? 'No feedback yet' }}</p>
-            @endif
-
-        </div>
-        <div class="card-footer text-end">
-            <a href="{{ route('lecturer.dashboard') }}" class="btn btn-outline-secondary">
-                <i class="fas fa-arrow-left me-2"></i> Back to Submissions
-            </a>
+<div class="main-content container py-4">
+    
+    {{-- Topbar --}}
+    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
+        <h1 class="h3 mb-0">Submission Details</h1>
+        
+        {{-- Admin Profile --}}
+        <div class="d-flex align-items-center">
+            <div class="bg-primary text-white rounded-circle d-flex justify-content-center align-items-center" style="width: 40px; height: 40px; font-weight: bold;">
+                {{ isset($adminUser->name) ? strtoupper(substr($adminUser->name, 0, 1)) : 'A' }}
+            </div>
+            <div class="ms-2">
+                <div class="fw-bold">{{ $adminUser->name ?? 'Admin User' }}</div>
+                <div class="small text-muted">Administrator</div>
+            </div>
         </div>
     </div>
+
+    {{-- Include navigation --}}
+    @include('lecturer.navbar')
+
+    {{-- Submission Info Card --}}
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-light">
+            <h5 class="mb-0">Assignment Submission Information</h5>
+        </div>
+        <div class="card-body">
+            <div class="row mb-2">
+                <div class="col-md-6">
+                    <strong>User Email:</strong> {{ $submission->user->email ?? 'N/A' }}
+                </div>
+                <div class="col-md-6">
+                    <strong>Assignment Title:</strong> {{ $submission->title ?? 'N/A' }}
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-6">
+                    <strong>Submitted At:</strong> {{ $submission->created_at->toDayDateTimeString() }}
+                </div>
+               
+            </div>
+            <div class="row mb-2">
+               <div class="col-md-4">
+                    <strong>Plagiarism Score:</strong>
+                    <span class="
+                        {{ $submission->plagiarism_score > 50 ? 'text-danger' : 
+                        ($submission->plagiarism_score > 25 ? 'text-warning' : 'text-success') }}
+                        fw-bold">
+                        {{ $submission->plagiarism_score }}%
+                    </span>
+                </div>
+                <div class="col-md-4">
+                    <strong>Total Words:</strong> {{ $submission->total_words }}
+                </div>
+                <div class="col-md-4">
+                    <strong>Plagiarized Words:</strong> {{ $submission->plagiarized_words }}
+                </div>
+            </div>
+
+            @if ($submission->uploaded_file)
+                <div class="mb-3">
+                    <strong>Uploaded File:</strong>
+                    <a href="{{ asset('storage/' . $submission->uploaded_file) }}" target="_blank" class="btn btn-sm btn-outline-primary ms-2">
+                        Download File
+                    </a>
+                </div>
+            @endif
+
+            <div class="mb-3">
+                <strong>Pasted Text:</strong>
+                <div class="border rounded bg-light p-3 mt-2" style="white-space: pre-wrap;">
+                    {{ $submission->pasted_text }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Optional: Back Button --}}
+    <a href="{{ url()->previous() }}" class="btn btn-secondary">
+        ← Back
+    </a>
+
 </div>
 @endsection

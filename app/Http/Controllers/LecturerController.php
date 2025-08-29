@@ -97,13 +97,9 @@ class LecturerController extends Controller
         return redirect()->route('lecturer.dashboard')->with('success', 'Assignment created successfully.');
     }
 
-    public function assignments($id)
-    {
-        // Find assignment
-        $assignment = Assignment::with('submissions.user')->findOrFail($id);
+    public function assignments(){
 
-        // Pass to view
-        return view('assignments.show', compact('assignment'));
+        return view('lecturer.submissions.index');
     }
 
      public function show($id)
@@ -123,5 +119,23 @@ class LecturerController extends Controller
         $assignment->delete();
 
         return redirect()->route('lecturer.dashboard')->with('success', 'Assignment deleted successfully.');
+    }
+
+    public function users()
+    {
+        $admin = Auth::user();
+        $userCount = User::count();
+        $submissionCount = Submission::count();
+        $submissionCount = Submission::count();
+        $users = User::latest()->paginate(10);
+       
+
+        return view('lecturer.users', 
+        // compact(
+            // 'users', 'submissionCount',
+            // 'userCount', 'lecturerCount', 
+            // 'submissionCount'
+        // )
+    );
     }
 }

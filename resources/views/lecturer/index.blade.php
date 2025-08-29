@@ -4,27 +4,13 @@
  <div class="main-content">
         <div class="topbar">
             <h1>Dashboard</h1>
-            <div class="admin-profile">
-                <div class="admin-avatar">
-                    <!-- Display admin initials -->
-                    <?php 
-                        $adminInitials = 'AU';
-                        if (isset($adminUser) && !empty($adminUser->name)) {
-                            $names = explode(' ', $adminUser->name);
-                            $initials = '';
-                            foreach ($names as $name) {
-                                $initials .= strtoupper(substr($name, 0, 1));
-                            }
-                            $adminInitials = substr($initials, 0, 2);
-                        }
-                        echo $adminInitials;
-                    ?>
-                </div>
+            <div class="admin-profile"> 
+                
                 <div>
                     <div class="fw-bold">
-                        <?php echo isset($adminUser) ? $adminUser->name : 'Admin User'; ?>
+                        <?php echo isset($lecturer) ? $lecturer->name : 'Admin User'; ?>
                     </div>
-                    <div class="small text-muted">Administrator</div>
+                    <div class="small text-muted">Lecturer</div>
                 </div>
             </div>
         </div>
