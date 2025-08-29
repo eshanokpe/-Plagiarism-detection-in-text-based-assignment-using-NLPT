@@ -6,7 +6,7 @@
     <ul class="sidebar-nav">
         <li><a href="{{ route('admin.dashboard.index') }}" class="active"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
         <li><a href="{{ route('admin.users.index') }}"><i class="bi bi-people"></i> Students</a></li>
-        <li><a href="{{ route('admin.lectures.index') }}"><i class="bi bi-code-slash"></i> Lectures</a></li>
+        <li><a href="{{ route('admin.lectures.index') }}"><i class="bi bi-code-slash"></i> Lecturers</a></li>
         <li><a href="{{ route('admin.assignments.index') }}"><i class="bi bi-gear"></i> Assignment</a></li>
        
         <li>
