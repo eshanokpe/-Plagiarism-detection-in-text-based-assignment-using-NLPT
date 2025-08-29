@@ -22,7 +22,7 @@
                 </div>
                 <div>
                     <div class="fw-bold">
-                        <?php echo isset($adminUser) ? $adminUser->name : 'Admin User'; ?>
+                       Admin User
                     </div>
                     <div class="small text-muted">Administrator</div>
                 </div>
