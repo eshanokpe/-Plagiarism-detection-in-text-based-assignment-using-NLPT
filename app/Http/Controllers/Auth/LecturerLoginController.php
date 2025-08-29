@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\RecentActivity;
 use Illuminate\Support\Facades\Auth;
 
 class LecturerLoginController extends Controller
@@ -27,12 +28,25 @@ class LecturerLoginController extends Controller
         return back()->withErrors(['email' => 'Invalid credentials'])->withInput();
     }
 
+
     public function logout(Request $request)
     {
+        $lecturer = Auth::guard('lecturer')->user();
+
+        // Log recent activity
+        if ($lecturer) {
+            RecentActivity::create([
+                'user_type'   => 'lecturer',
+                'user_id'     => $lecturer->id,
+                'action'      => 'logout',
+                'description' => 'Lecturer ' . $lecturer->name . ' logged out.',
+            ]);
+        }
+
         Auth::guard('lecturer')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('lecturer.login');
+        return redirect()->route('lecturer.login')->with('success', 'Logged out successfully.');
     }
 }
