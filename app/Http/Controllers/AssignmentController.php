@@ -9,10 +9,11 @@ use App\Models\Assignment;
 use Smalot\PdfParser\Parser as PdfParser;
 use Exception;
 use App\Models\Submission;
+use Illuminate\Support\Facades\Storage;
 
 class AssignmentController extends Controller
 {
-    private $apiToken   = 'jRXK339l7U2ieDaUW1EMvQSsBfCPIcI0xQJqyFXtd4f287bc';
+    private $apiToken   = '22SzRlvsj9JtyNFeifEC2MbPwu0yXoMVbf0T8ngW46ca04e6';
     private $apiEndpoint = 'https://api.gowinston.ai/v2/plagiarism';
     
     public function index(Request $request)
@@ -25,88 +26,54 @@ class AssignmentController extends Controller
         $assignment = null;
         $extractedText = null;
 
-        if ($request->isMethod('post')) {
-            // Handle upload/paste submission
-            $validationResult = $this->validateRequest($request);
-            if ($validationResult !== true) {
-                return $validationResult;
-            }
-
-            try {
-                $data = $this->prepareApiData();
-                $processingResult = $this->processInput($request, $data);
-
-                if (isset($processingResult['error'])) {
-                    return back()->with('error', $processingResult['error']);
-                }
-
-                extract($processingResult);
-
-                $response = $this->makeApiRequest($data);
-                $apiResponse = $this->handleApiResponse($response, $request, $filePath, $originalFilename, $extractedText);
-
-                if ($apiResponse['success']) {
-                    $assignment = $apiResponse['assignment'];
-                    $result     = $apiResponse['result'];
-                    $extractedText     = $apiResponse['extracted_text'];
-                } else {
-                    return back()->with('error', $apiResponse['message']);
-                }
-
-            } catch (Exception $e) {
-                return back()->with('error', 'Failed to connect to plagiarism service: ' . $e->getMessage());
-            }
-        }
-
-        return view('assignments.index', compact('user', 'assignments', 'assignment', 'result','extractedText', 'counts'));
+        return view('assignments.index', compact('user', 'assignments', 'assignment', 'result', 'extractedText', 'counts'));
     }
 
     public function store(Request $request)
     {
         $user = auth()->user();
+        $counts = $this->getAssignmentCounts($user->id);
         $assignments = Assignment::where('user_id', $user->id)->latest()->paginate(10);
 
         $result = null;
         $assignment = null;
         $extractedText = null;
 
-        if ($request->isMethod('post')) {
-            // Handle upload/paste submission
-            $validationResult = $this->validateRequest($request);
-            if ($validationResult !== true) {
-                return $validationResult;
-            }
-
-            try {
-                $data = $this->prepareApiData();
-                $processingResult = $this->processInput($request, $data);
-
-                if (isset($processingResult['error'])) {
-                    return back()->with('error', $processingResult['error']);
-                }
-
-                extract($processingResult);
-
-                $response = $this->makeApiRequest($data);
-                $apiResponse = $this->handleApiResponse($response, $request, $filePath, $originalFilename, $extractedText);
-                Log::info('message', ['response' => $response]);
-
-                if ($apiResponse['success']) {
-                    $assignment = $apiResponse['assignment'];
-                    $result     = $apiResponse['result'];
-                    $extractedText     = $apiResponse['extracted_text'];
-                } else {
-                    return back()->with('error', $apiResponse['message']);
-                }
-
-            } catch (Exception $e) {
-                return back()->with('error', 'Failed to connect to plagiarism service: ' . $e->getMessage());
-            }
+        // Handle upload/paste submission
+        $validationResult = $this->validateRequest($request);
+        if ($validationResult !== true) {
+            return $validationResult;
         }
-        // return redirect()->back()->with('success', 'Assignment submitted successfully!');
-        
-        // We need to recalculate counts after a potential new assignment has been created.
-        $counts = $this->getAssignmentCounts($user->id);
+
+        try {
+            $data = $this->prepareApiData();
+            $processingResult = $this->processInput($request, $data);
+
+            if (isset($processingResult['error'])) {
+                return back()->with('error', $processingResult['error']);
+            }
+
+            $filePath = $processingResult['filePath'] ?? null;
+            $originalFilename = $processingResult['originalFilename'] ?? null;
+            $extractedText = $processingResult['extractedText'] ?? null;
+
+            $response = $this->makeApiRequest($data);
+            $apiResponse = $this->handleApiResponse($response, $request, $filePath, $originalFilename, $extractedText);
+            Log::info('API Response', ['response' => $response->json()]);
+
+            if ($apiResponse['success']) {
+                $assignment = $apiResponse['assignment'];
+                $result = $apiResponse['result'];
+                $extractedText = $apiResponse['extracted_text'];
+            } else {
+                return back()->with('error', $apiResponse['message']);
+            }
+
+        } catch (Exception $e) {
+            Log::error('Plagiarism check failed', ['error' => $e->getMessage()]);
+            return back()->with('error', 'Failed to connect to plagiarism service: ' . $e->getMessage());
+        }
+
         return view('assignments.index', compact('user', 'assignments', 'assignment', 'result', 'extractedText', 'counts'));
     }
 
@@ -152,7 +119,9 @@ class AssignmentController extends Controller
             } elseif ($extension === 'txt') {
                 $extractedText = file_get_contents($file->getPathname());
             } else {
-                $extractedText = "Document parsing not fully supported for this file type.";
+                // For DOC/DOCX files, we'll need to handle them differently
+                // For now, just return an error
+                return ['error' => 'Document parsing not fully supported for this file type. Please use PDF or TXT files.'];
             }
 
             $data['text'] = $extractedText;
@@ -199,7 +168,7 @@ class AssignmentController extends Controller
             'title'              => $request->title,
             'original_filename'  => $originalFilename,
             'extracted_text'     => $extractedText,
-            'plagiarism_result'  => $result,
+            'plagiarism_result'  => json_encode($result),
             'plagiarism_score'   => $result['result']['score'] ?? 0,
         ]);
 
@@ -214,14 +183,12 @@ class AssignmentController extends Controller
     private function getAssignmentCounts($userId)
     {
         $query = Assignment::where('user_id', $userId);
-        $submitted = Submission::count();
+        $submitted = Submission::where('user_id', $userId)->count();
 
-        // Based on the current implementation, all assignments stored in the database
-        // are from successful API checks, so they are all considered 'completed'.
         return [
             'total'     => $query->count(),
             'completed' => $query->count(),
-            'submitted'   => $submitted,
+            'submitted' => $submitted,
             'failed'    => 0,
         ];
     }

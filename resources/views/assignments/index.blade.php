@@ -76,23 +76,9 @@
                     </div>
                 </div>
             </div>
-            @if(session('error'))
-                <div class="alert alert-error">
-                    {{ session('error') }}
-                </div>
+             @if(session('error'))
+                <div class="alert alert-danger">{{ session('error') }}</div>
             @endif
-            @if(session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
-            @foreach (['success', 'error', 'warning', 'info'] as $msg)
-                @if(session($msg))
-                    <div class="alert alert-{{ $msg }}">
-                        {{ session($msg) }}
-                    </div>
-                @endif
-            @endforeach
 
             <!-- Upload / Paste Form -->
             <div class="row mb-4">
@@ -119,30 +105,16 @@
                 </div>
             </div>
 
-            @if(session('error'))
-                <div class="alert alert-danger">{{ session('error') }}</div>
-            @endif
-            @if(session('error'))
-                <div class="alert alert-error">
-                    {{ session('error') }}
-                </div>
-            @endif
-            @if(session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
-            @foreach (['success', 'error', 'warning', 'info'] as $msg)
-                @if(session($msg))
-                    <div class="alert alert-{{ $msg }}">
-                        {{ session($msg) }}
-                    </div>
-                @endif
-            @endforeach
+           
 
             @if($result)
                 {{-- Results UI --}}
-                @include('assignments.result', ['assignment' => $assignment, 'result' => $result])
+                @include('assignments.result', [
+                    'assignment' => $assignment, 
+                    'result' => $result,
+                    'extractedText' => $extractedText,
+                    'title' => $assignment->title ?? ''
+                ])
             @endif
 
         </div>

@@ -28,6 +28,17 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('dashboard');
     Route::get('/assignments', [AssignmentController::class, 'index'])->name('assignments.index');
     Route::post('/assignments/store', [AssignmentController::class, 'store'])->name('assignments.store');
+    
+    Route::get('/assignments', [AssignmentController::class, 'index'])
+    ->name('assignments.index');
+
+    // POST route for saving/checking plagiarism (store)
+    Route::post('/assignments/store', [AssignmentController::class, 'store'])
+        ->name('assignments.store');
+
+    Route::get('/assignments/{id}', [AssignmentController::class, 'index'])
+    ->name('assignments.show');
+    
     Route::get('/assignments/view', [AssignmentController::class, 'view'])->name('assignments.view');
     Route::get('/assignments/show/{id}', [AssignmentController::class, 'show'])->name('assignments.show');
     Route::get('/assignments/{id}/result', [AssignmentController::class, 'result'])->name('assignments.result');

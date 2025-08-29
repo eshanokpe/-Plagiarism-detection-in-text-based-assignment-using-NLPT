@@ -38,11 +38,7 @@
             </li>
         </ul>
     </div>
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
+    
 
     <!-- Main Content -->
     <div class="main-content">

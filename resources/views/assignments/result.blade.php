@@ -1,5 +1,3 @@
-{{-- resources/views/assignments/partials/result.blade.php --}}
-
 <div class="row mb-4">
     <div class="col">
         <h2>Plagiarism Results: {{ $assignment->title ?? '' }}</h2>
@@ -8,7 +6,7 @@
 </div>
 
 <!-- Stats Cards -->
-<div class="row mb-4">
+<div class="row mb-4"> 
     <div class="col-md-3">
         <div class="dashboard-card stat-card">
             <div class="stat-number {{ $result['result']['score'] > 50 ? 'text-danger' : ($result['result']['score'] > 25 ? 'text-warning' : 'text-success') }}">
@@ -154,21 +152,19 @@
     </div>
 </div>
 
-<form action="{{ route('submission.store') }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('submission.store') }}" method="POST">
     @csrf
     {{-- Store Original Assignment Text or File --}}
     <div class="mb-3">
         <label for="assignment_text" class="form-label">Assignment Text</label>
-        <textarea class="form-control" id="assignment_text" name="assignment_text" rows="5" readonly>
-            {{ $extractedText ?? '' }}
-        </textarea>
+        <textarea class="form-control" id="assignment_text" name="assignment_text" rows="5" readonly>{{ $extractedText ?? '' }}</textarea>
     </div>
 
-    @if(isset($uploadedFileName))
+    @if(isset($assignment->original_filename))
         <div class="mb-3">
             <label class="form-label">Uploaded File</label>
-            <input type="text" class="form-control" value="{{ $uploadedFileName }}" readonly>
-            <input type="hidden" name="uploaded_file" value="{{ $uploadedFileName }}">
+            <input type="text" class="form-control" value="{{ $assignment->original_filename }}" readonly>
+            <input type="hidden" name="uploaded_file" value="{{ $assignment->original_filename }}">
         </div>
     @endif
 
@@ -177,9 +173,9 @@
     <input type="hidden" name="sources_found" value="{{ count($result['sources'] ?? []) }}">
     <input type="hidden" name="total_words" value="{{ $result['result']['textWordCounts'] ?? 0 }}">
     <input type="hidden" name="plagiarized_words" value="{{ $result['result']['totalPlagiarismWords'] ?? 0 }}">
-    <input type="hidden" name="text_analysis" value="{{ nl2br($text) }}">
-    <input type="hidden" name="title" value="{{ $assignment->title }}">
-    
+    <input type="hidden" name="text_analysis" value="{{ isset($text) ? nl2br($text) : '' }}">
+    <input type="hidden" name="title" value="{{ $title }}">
+    <input type="hidden" name="assignment_id" value="{{ $assignment->id ?? '' }}">
 
     {{-- Sources with Links --}}
     @if(isset($result['sources']) && count($result['sources']) > 0)
@@ -191,9 +187,6 @@
 
     <button type="submit" class="btn btn-primary">Submit Assignment</button>
 </form>
-
-
-
 
 <style>
     .highlight-plagiarism {
