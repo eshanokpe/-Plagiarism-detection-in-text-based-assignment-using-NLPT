@@ -36,7 +36,7 @@
                     <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#createLecturerModal">
                         <i class="bi bi-plus-circle me-1"></i> Add Lecturer
                     </button>
-                </div>
+                </div> 
 
                 <div class="card-body">
                     @if ($lectures->isEmpty())
@@ -71,37 +71,37 @@
     </div>
 
     <!-- Create Lecturer Modal -->
-<div class="modal fade" id="createLecturerModal" tabindex="-1" aria-labelledby="createLecturerModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <form method="POST" action="{{ route('admin.lecturer.store') }}">
-            @csrf
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="createLecturerModalLabel">Add New Lecturer</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="lecturerName" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="lecturerName" name="name" required>
+    <div class="modal fade" id="createLecturerModal" tabindex="-1" aria-labelledby="createLecturerModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form method="POST" action="{{ route('admin.lecturer.store') }}">
+                @csrf
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createLecturerModalLabel">Add New Lecturer</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="mb-3">
-                        <label for="lecturerEmail" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="lecturerEmail" name="email" required>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="lecturerName" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="lecturerName" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="lecturerEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="lecturerEmail" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="lecturerPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="lecturerPassword" name="password" required>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="lecturerPassword" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="lecturerPassword" name="password" required>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Create Lecturer</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Create Lecturer</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 
 </div>
 @endsection

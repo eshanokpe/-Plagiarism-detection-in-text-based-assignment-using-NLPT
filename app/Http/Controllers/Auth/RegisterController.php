@@ -27,6 +27,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
+            'matricNo' => ['required', 'string', 'max:255', 'unique:users,matricNo'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -36,6 +37,7 @@ class RegisterController extends Controller
     {
         return User::create([
             'name' => $data['name'],
+            'matricNo' => $data['matricNo'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
@@ -49,9 +51,7 @@ class RegisterController extends Controller
         $this->validator($request->all())->validate();
 
         $user = $this->create($request->all());
-        // Success message
-        toastr()->success('Registration successful. Please login.');
-
+       
          // Use session flash for toastr
         Session::flash('toastr', [
             [

@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LecturerLoginController;
 use App\Http\Controllers\LecturerController;
+use App\Http\Controllers\Auth\PasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,8 @@ Auth::routes();
 
 // Student Routes (requires user to be authenticated as a student)
 Route::middleware(['auth'])->group(function () {
+    Route::post('/password/update', [PasswordController::class, 'updatePassword'])->name('password.update');
+
     Route::get('/home', [HomeController::class, 'index'])->name('dashboard');
     Route::get('/assignments', [AssignmentController::class, 'index'])->name('assignments.index');
     Route::post('/assignments/store', [AssignmentController::class, 'store'])->name('assignments.store');
@@ -80,6 +83,8 @@ Route::prefix('admin')->group(function () {
     Route::middleware(['admin.auth'])->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard.index');
         Route::get('/users', [AdminController::class, 'users'])->name('admin.users.index');
+        Route::post('/users/store', [AdminController::class, 'usersStore'])->name('admin.user.store');
+
         Route::get('/lectures', [AdminController::class, 'lectures'])->name('admin.lectures.index');
         Route::post('/store', [AdminController::class, 'lecturesStore'])->name('admin.lecturer.store');
 

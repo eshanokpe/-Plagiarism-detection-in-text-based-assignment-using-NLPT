@@ -31,18 +31,29 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/home';
 
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+        $this->middleware('auth')->only('logout');
+    } 
+
     public function login(Request $request)
     {
         // dd('login');
         // ✅ Validate input
         $this->validate($request, [
-            'email' => 'required|email',
+            'matricNo' => 'required|string',
             'password' => 'required|string',
         ]);
 
         // ✅ Attempt login
         if (Auth::attempt(
-            ['email' => $request->email, 'password' => $request->password],
+            ['matricNo' => $request->matricNo, 'password' => $request->password],
             $request->filled('remember')
         )) {
             // Regenerate session to prevent fixation
@@ -56,16 +67,13 @@ class LoginController extends Controller
             'email' => [trans('auth.failed')],
         ]);
     }
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    
+
+    public function username()
     {
-        $this->middleware('guest')->except('logout');
-        $this->middleware('auth')->only('logout');
-    } 
+        return 'matricNo';
+    }
+
 
     public function logout(Request $request)
     {

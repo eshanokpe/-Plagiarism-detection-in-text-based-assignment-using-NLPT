@@ -172,7 +172,7 @@
                                 <label for="password" class="form-label">Password</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                    <input type="password" class="form-control" value="admin" id="password" name="password" placeholder="Enter your password" required>
+                                    <input type="password" class="form-control" value="12345678" id="password" name="password" placeholder="Enter your password" required>
                                     <span class="input-group-text password-toggle" id="passwordToggle">
                                         <i class="fas fa-eye"></i>
                                     </span>

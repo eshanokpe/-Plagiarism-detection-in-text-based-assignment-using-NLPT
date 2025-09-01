@@ -50,6 +50,36 @@ class AdminController extends Controller
         ));
     }
 
+     public function usersStore(Request $request)
+    {
+        // Validate input
+        $validated = $request->validate([
+            'name'     => 'required|string|max:255',
+            'matricNo' => 'required|string|max:255|unique:users,matricNo',
+            'email'    => 'required|string|email|max:255|unique:users,email',
+            'password' => 'required|string|min:8',
+        ]);
+
+        // Create Lecturer
+        $user = User::create([
+            'name'     => $validated['name'],
+            'email'    => $validated['email'],
+            'matricNo'    => $validated['matricNo'],
+            'password' => Hash::make($validated['password']),
+        ]);
+        RecentActivity::create([
+            'user_type'   => 'user',
+            'user_id'     => $user->id,
+            'action'      => 'created',
+            'description' => 'User ' . $user->name . ' was created by admin ID ' . (Auth::user() ? Auth::user()->id : 'system'),
+        ]);
+
+        // Redirect back with success
+        return redirect()
+            ->route('admin.users.index')
+            ->with('success', 'Student created successfully!');
+    }
+
     public function lectures()
     {
         $admin = Auth::user();

@@ -368,16 +368,33 @@
                             
                             <form method="POST" action="{{ route('login') }}">
                                 @csrf 
+
+
                                 
                                 <!-- Email Field -->
                                 <div class="form-floating">
-                                    <input type="email" class="form-control @error('email') is-invalid @enderror" 
-                                        id="login-email" name="email" placeholder="name@example.com" value="{{ old('email') }}" required autofocus>
-                                    <label for="login-email"><i class="fas fa-envelope me-2" style="color: #3498db;"></i>Email address</label>
-                                    @error('email')
+                                    <input type="text" 
+                                        class="form-control @error('matricNo') is-invalid @enderror" 
+                                        id="matricNo" 
+                                        name="matricNo" 
+                                        placeholder="Matric No." 
+                                        value="" 
+                                        required 
+                                        autocomplete="new-password"
+                                        onpaste="return false" 
+                                        oncopy="return false" 
+                                        oncut="return false">
+                                    <label for="matricNo"><i class="fas fa-envelope me-2" style="color: #3498db;"></i>Matric No.</label>
+                                    @error('matricNo')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
+
+
+
+
+
+
                                 
                                 <!-- Password Field -->
                                 <div class="form-floating position-relative">
@@ -436,6 +453,24 @@
                                         id="register-email" name="email" placeholder="name@example.com" value="{{ old('email') }}" required>
                                     <label for="register-email"><i class="fas fa-envelope me-2" style="color: #3498db;"></i>Email address</label>
                                     @error('email')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                 <div class="form-floating">
+                                    <input type="text" 
+                                        class="form-control @error('matricNo') is-invalid @enderror" 
+                                        id="matricNo" 
+                                        name="matricNo" 
+                                        placeholder="Matric No." 
+                                        value="" 
+                                        required 
+                                        autocomplete="new-password"
+                                        onpaste="return false" 
+                                        oncopy="return false" 
+                                        oncut="return false">
+                                    <label for="matricNo"><i class="fas fa-envelope me-2" style="color: #3498db;"></i>Matric No.</label>
+                                    @error('matricNo')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
