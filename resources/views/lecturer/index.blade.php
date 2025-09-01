@@ -30,6 +30,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Name</th>
+                                        <th>Matric_No</th>
                                         <th>Email</th>
                                         <th>Registered</th>
                                     </tr>
@@ -39,6 +40,7 @@
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
                                             <td>{{ $user->name }}</td>
+                                            <td>{{ $user->matricNo ?? 'N/A'}}</td>
                                             <td>{{ $user->email }}</td>
                                             <td>{{ $user->created_at->diffForHumans() }}</td>
                                         </tr>

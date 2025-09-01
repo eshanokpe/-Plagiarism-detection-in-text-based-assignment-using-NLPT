@@ -43,7 +43,8 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>User Email</th>
+                                        <th>Student Email</th>
+                                        <th>Matric_No</th>
                                         <th>Assignment Title</th>
                                         <th>Submitted At</th>
                                         <th>Plagiarism Score</th>
@@ -55,6 +56,7 @@
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
                                             <td>{{ $submission->user->email ?? 'N/A' }}</td>
+                                            <td>{{ $submission->user->matricNo ?? 'N/A' }}</td>
                                             <td>{{ $submission->title ?? 'N/A' }}</td>
                                             <td>{{ $submission->created_at->diffForHumans() }}</td>
                                             <td>
