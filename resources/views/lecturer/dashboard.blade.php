@@ -45,7 +45,8 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th>#</th>
-                                        <th>Student</th>
+                                        <th>Student Name</th>
+                                        <th>Student matricNo</th>
                                         <th>Assignment Title</th>
                                         <th>Submission Date</th>
                                         <th>Plagiarism Score</th>
@@ -58,6 +59,7 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $submission->user->name ?? 'Unknown' }}</td>
+                                            <td>{{ $submission->user->matricNo ?? 'N/A' }}</td>
                                             <td>{{ $submission->title ?? 'Untitled' }}</td>
                                             <td>{{ $submission->created_at->format('d M, Y h:i A') }}</td>
                                             <td>
