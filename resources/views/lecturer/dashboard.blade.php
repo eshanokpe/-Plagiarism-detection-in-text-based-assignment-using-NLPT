@@ -46,7 +46,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Student Name</th>
-                                        <th>Student matricNo</th>
+                                        <th>Matric_No</th>
                                         <th>Assignment Title</th>
                                         <th>Submission Date</th>
                                         <th>Plagiarism Score</th>

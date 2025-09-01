@@ -56,7 +56,10 @@
             <div class="card-body">
                 <div class="row mb-2">
                     <div class="col-md-6">
-                        <strong>User Email:</strong> {{ $submission->user->email ?? 'N/A' }}
+                        <strong>Student Email:</strong> {{ $submission->user->email ?? 'N/A' }}
+                    </div> 
+                    <div class="col-md-6">
+                        <strong>Matric_No:</strong> {{ $submission->user->matricNo ?? 'N/A' }}
                     </div>
                     <div class="col-md-6">
                         <strong>Assignment Title:</strong> {{ $submission->title ?? 'N/A' }}

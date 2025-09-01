@@ -33,7 +33,7 @@
                     <strong>Student Email:</strong> {{ $submission->user->email ?? 'N/A' }}
                 </div>
                 <div class="col-md-6">
-                    <strong>Student Matric No.:</strong> {{ $submission->user->matricNo ?? 'N/A' }}
+                    <strong> Matric_No :</strong> {{ $submission->user->matricNo ?? 'N/A' }}
                 </div>
                 <div class="col-md-6">
                     <strong>Assignment Title:</strong> {{ $submission->title ?? 'N/A' }}
