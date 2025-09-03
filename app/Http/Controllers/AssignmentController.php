@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Storage;
 
 class AssignmentController extends Controller
 {
-    private $apiToken   = 'hoDvQNo5Nc8uZSPYClK5AyH70xafzPxD8qShGs9ea4963aba';
+    private $apiToken   = 'rjKPGDJg9Pny8Pu3t86LT6Z2qjdrxAVHIKtPVXoube86dc89';
     private $apiEndpoint = 'https://api.gowinston.ai/v2/plagiarism';
     
     public function index(Request $request)
